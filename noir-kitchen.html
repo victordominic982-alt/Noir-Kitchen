@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nior Kitchen | Authentic Nigerian Cuisine &amp; Ordering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0b0b0c;
+      --black-elevated: #141417;
+      --black-card: #19191d;
+      --white: #ffffff;
+      --white-soft: #f7f6f5;
+      --muted: #b5b3b8;
+      --peach: #ffb59a;
+      --peach-light: #ffd8c7;
+      --peach-deep: #e88d6d;
+      --whatsapp: #25d366;
+      --success: #22c55e;
+      --border-dark: rgba(255, 255, 255, 0.12);
+      --border-peach: rgba(255, 181, 154, 0.35);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container { width: min(1180px, 92%); margin: 0 auto; }
+    .hidden { display: none !important; }
+
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(11, 11, 12, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 78px; }
+    .brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; color: var(--white); }
+    .brand-logo { flex-shrink: 0; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: 0.08em; color: var(--white);
+    }
+    .brand-tag { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--peach); font-weight: 600; text-transform: uppercase; }
+
+    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.2s ease; }
+    .nav-links a:hover { color: var(--peach); }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; }
+    .care-pill {
+      font-family: inherit;
+      font-size: 0.82rem; font-weight: 600; color: var(--peach-light);
+      background: rgba(255, 181, 154, 0.12); border: 1px solid var(--border-peach);
+      padding: 0.52rem 0.9rem; border-radius: 999px; cursor: pointer; transition: all 0.2s ease;
+    }
+    .care-pill:hover { background: var(--peach); color: var(--black); }
+
+    .account-pill {
+      font-family: inherit;
+      font-size: 0.8rem; font-weight: 700; color: var(--white);
+      background: var(--black-card); border: 1px solid var(--border-dark);
+      padding: 0.52rem 0.9rem; border-radius: 999px; cursor: pointer; transition: all 0.2s ease;
+    }
+    .account-pill:hover { border-color: var(--peach); color: var(--peach); }
+
+    .cart-btn {
+      display: inline-flex; align-items: center; gap: 0.55rem; background: var(--white);
+      color: var(--black); border: none; padding: 0.58rem 1.05rem; border-radius: 999px;
+      font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .cart-btn:hover { background: var(--peach); transform: translateY(-1px); }
+    .cart-badge { background: var(--black); color: var(--peach); font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 999px; }
+
+    /* Hero */
+    .hero {
+      padding: 4.2rem 0 3.5rem;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255, 181, 154, 0.16), transparent 45%),
+        radial-gradient(circle at 15% 80%, rgba(255, 255, 255, 0.05), transparent 40%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.5rem; align-items: center; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.75rem; font-weight: 700; color: var(--peach); margin-bottom: 0.65rem; }
+    .hero h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.1rem; }
+    .hero h1 span { color: var(--peach); }
+    .hero-sub { color: var(--muted); font-size: 1.02rem; max-width: 540px; margin-bottom: 1.8rem; }
+    .hero-sub strong { color: var(--white); }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;
+      border: none; cursor: pointer; font-family: inherit; font-weight: 700; font-size: 0.92rem;
+      border-radius: var(--radius-sm); padding: 0.85rem 1.45rem; transition: all 0.2s ease;
+    }
+    .btn-peach { background: var(--peach); color: var(--black); }
+    .btn-peach:hover { background: var(--peach-light); transform: translateY(-1px); }
+    .btn-outline-white { background: transparent; color: var(--white); border: 1px solid var(--border-dark); }
+    .btn-outline-white:hover { border-color: var(--peach); color: var(--peach); }
+    .full-width { width: 100%; }
+
+    .hero-card {
+      position: relative; background: var(--white); color: var(--black);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); border: 2px solid var(--peach);
+    }
+    .hero-badge {
+      position: absolute; top: 1rem; left: 1rem; background: var(--black); color: var(--peach);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 0.75rem; border-radius: 999px; z-index: 2;
+    }
+    .hero-card img, .menu-img-wrap img { width: 100%; height: 270px; object-fit: cover; display: block; }
+    .hero-card-footer { padding: 1.15rem 1.3rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: var(--white); }
+    .hero-card-footer h3 { font-size: 1.1rem; color: var(--black); }
+    .hero-card-footer p { font-size: 0.84rem; color: #555; }
+    .price-tag { background: var(--peach-light); color: var(--black); font-weight: 800; padding: 0.38rem 0.75rem; border-radius: 8px; white-space: nowrap; }
+
+    /* Order Accepted Banner */
+    .order-status-banner {
+      background: #102418;
+      border-top: 2px solid var(--success);
+      border-bottom: 2px solid var(--success);
+      padding: 1.25rem 0;
+    }
+    .status-inner {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .status-title { color: #86efac; font-weight: 800; font-size: 1.02rem; }
+    .status-detail { color: #d1fae5; font-size: 0.88rem; }
+    .status-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+
+    /* Menu */
+    .menu-section { background: var(--white); color: var(--black); padding: 4.5rem 0; border-top: 4px solid var(--peach); }
+    .menu-section .eyebrow { color: var(--peach-deep); }
+    .section-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .section-header h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2rem, 3.8vw, 2.9rem); color: var(--black); line-height: 1.1; }
+
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-btn {
+      background: var(--white-soft); color: var(--black); border: 1px solid #e3dedb;
+      padding: 0.55rem 1rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease;
+    }
+    .filter-btn:hover { border-color: var(--peach-deep); }
+    .filter-btn.active { background: var(--black); color: var(--peach); border-color: var(--black); }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.6rem; }
+    .menu-card {
+      background: var(--white); border: 1px solid #ebe6e3; border-radius: var(--radius-lg);
+      overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(11, 11, 12, 0.09); border-color: var(--peach); }
+    .menu-img-wrap { position: relative; background: var(--black-elevated); height: 220px; overflow: hidden; }
+    .menu-img-wrap img { height: 100%; transition: transform 0.35s ease; }
+    .menu-card:hover .menu-img-wrap img { transform: scale(1.04); }
+    .menu-body { padding: 1.2rem; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+    .menu-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; }
+    .menu-title { font-size: 1.08rem; font-weight: 700; color: var(--black); }
+    .menu-price { font-weight: 800; color: var(--black); background: var(--peach-light); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.9rem; white-space: nowrap; }
+    .menu-desc { font-size: 0.87rem; color: #565459; flex: 1; }
+
+    .swallow-select-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
+    .swallow-select-wrap label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #444; }
+    .swallow-select {
+      width: 100%; padding: 0.5rem 0.65rem; border-radius: 8px; border: 1px solid #d8d2ce;
+      background: var(--white-soft); color: var(--black); font-weight: 600; font-size: 0.85rem;
+    }
+
+    .add-btn {
+      margin-top: 0.4rem; width: 100%; background: var(--black); color: var(--white);
+      border: none; border-radius: var(--radius-sm); padding: 0.72rem 1rem;
+      font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: background 0.2s ease, color 0.2s ease;
+    }
+    .add-btn:hover { background: var(--peach); color: var(--black); }
+
+    /* Steps */
+    .info-strip { background: var(--black-elevated); padding: 3.5rem 0; border-top: 1px solid var(--border-dark); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .step-card { background: var(--black-card); border: 1px solid var(--border-dark); border-radius: var(--radius-md); padding: 1.5rem; }
+    .step-num { display: inline-block; font-weight: 800; color: var(--black); background: var(--peach); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; margin-bottom: 0.8rem; }
+    .step-card h3 { font-size: 1.08rem; margin-bottom: 0.4rem; }
+    .step-card p { font-size: 0.88rem; color: var(--muted); }
+
+    .inline-care-link {
+      background: none; border: none; color: var(--peach); font-weight: 700; font-size: inherit;
+      font-family: inherit; cursor: pointer; text-decoration: underline;
+    }
+
+    /* Footer */
+    .footer { background: var(--black); padding: 3.5rem 0 1.8rem; border-top: 1px solid var(--border-dark); }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; padding-bottom: 2.2rem; border-bottom: 1px solid var(--border-dark); }
+    .footer-desc { color: var(--muted); max-width: 360px; margin-top: 0.6rem; font-size: 0.9rem; }
+    .care-box { background: var(--black-card); border: 1px solid var(--border-peach); border-radius: var(--radius-md); padding: 1.3rem 1.5rem; }
+    .care-number-btn {
+      display: block; background: none; border: none; font-family: inherit;
+      font-size: 1.65rem; font-weight: 800; color: var(--peach);
+      cursor: pointer; margin: 0.2rem 0 0.35rem; text-align: left;
+    }
+    .care-number-btn:hover { color: var(--peach-light); text-decoration: underline; }
+    .care-note { font-size: 0.82rem; color: var(--muted); }
+    .footer-bottom { padding-top: 1.4rem; font-size: 0.82rem; color: var(--muted); text-align: center; }
+
+    /* Cart Drawer */
+    .cart-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); z-index: 60; }
+    .cart-drawer {
+      position: fixed; top: 0; right: 0; width: min(420px, 100%); height: 100vh;
+      background: var(--black-elevated); border-left: 1px solid var(--border-peach);
+      z-index: 70; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.28s ease;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--border-dark); }
+    .cart-header h3 { color: var(--peach); }
+    .icon-btn { background: transparent; color: var(--white); border: 1px solid var(--border-dark); width: 34px; height: 34px; border-radius: 8px; font-size: 1.25rem; cursor: pointer; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.9rem; }
+    .empty-cart { color: var(--muted); text-align: center; margin-top: 3rem; }
+    .cart-item { background: var(--black-card); border: 1px solid var(--border-dark); border-radius: var(--radius-sm); padding: 0.85rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+    .cart-item-title { font-weight: 700; font-size: 0.92rem; }
+    .cart-item-sub { font-size: 0.78rem; color: var(--peach-light); }
+    .qty-controls { display: flex; align-items: center; gap: 0.45rem; }
+    .qty-btn { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border-dark); background: var(--black); color: var(--white); font-weight: 700; cursor: pointer; }
+    .qty-btn:hover { background: var(--peach); color: var(--black); }
+
+    .cart-footer { padding: 1.2rem 1.4rem; border-top: 1px solid var(--border-dark); background: var(--black); }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; margin-bottom: 1rem; }
+    .cart-total-row strong { color: var(--peach); font-size: 1.3rem; }
+    .checkout-form { display: flex; flex-direction: column; gap: 0.65rem; }
+    .checkout-form input {
+      width: 100%; padding: 0.7rem 0.85rem; border-radius: 8px;
+      border: 1px solid var(--border-dark); background: var(--black-card); color: var(--white); font-size: 0.88rem;
+    }
+    .checkout-form input:focus { outline: none; border-color: var(--peach); }
+    .care-reminder { margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); text-align: center; }
+
+    /* Modals (Contact & Nior Kitchen Account) */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(6px); z-index: 80;
+      display: flex; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-card {
+      width: min(440px, 100%); background: var(--black-elevated);
+      border: 1px solid var(--peach); border-radius: var(--radius-lg);
+      padding: 1.6rem; box-shadow: var(--shadow);
+    }
+    .modal-card.center { text-align: center; }
+    .modal-card h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.8rem; color: var(--white); margin-bottom: 0.3rem; }
+    .modal-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+    .provider-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
+    .provider-btn {
+      background: var(--black-card); color: var(--white); border: 1px solid var(--border-dark);
+      border-radius: var(--radius-sm); padding: 0.65rem 0.75rem; font-family: inherit;
+      font-weight: 700; font-size: 0.84rem; cursor: pointer; transition: all 0.2s ease;
+    }
+    .provider-btn:hover { border-color: var(--peach); color: var(--peach); }
+
+    .divider-label {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); text-align: center; margin: 0.6rem 0 0.8rem;
+    }
+
+    .auth-form { display: flex; flex-direction: column; gap: 0.65rem; }
+    .auth-form input {
+      width: 100%; padding: 0.72rem 0.85rem; border-radius: 8px;
+      border: 1px solid var(--border-dark); background: var(--black-card); color: var(--white); font-size: 0.88rem;
+    }
+    .auth-form input:focus { outline: none; border-color: var(--peach); }
+
+    .contact-options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .btn-whatsapp { background: var(--whatsapp); color: #062110; }
+    .btn-whatsapp:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .btn-cancel { background: transparent; color: var(--muted); border: 1px solid var(--border-dark); margin-top: 0.3rem; }
+    .btn-cancel:hover { color: var(--white); border-color: var(--white); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--black); color: var(--white); border: 1px solid var(--peach);
+      padding: 0.75rem 1.3rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600; z-index: 90; box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand" aria-label="Nior Kitchen Home">
+        <svg class="brand-logo" width="46" height="46" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="44" height="44" rx="12" fill="#FFB59A" />
+          <rect x="6" y="6" width="36" height="36" rx="9" fill="#0B0B0C" stroke="#FFFFFF" stroke-opacity="0.18" />
+          <path d="M14 32V16L25 32V16" stroke="#FFB59A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M31 16C34.5 16 36.5 18.2 36.5 21C36.5 23.8 34.5 26 31 26H29.5V32" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="34.5" cy="30.5" r="2" fill="#FFB59A" />
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">NIOR KITCHEN</span>
+          <span class="brand-tag">AUTHENTIC NIGERIAN CUISINE</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#how-it-works">How to Order</a>
+        <a href="#contact">Customer Care</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" id="accountBtn" class="account-pill" onclick="openAccountModal()">Create Account</button>
+        <button type="button" class="care-pill" onclick="openContactModal()">Care: 08028477083</button>
+        <button id="openCartBtn" class="cart-btn" aria-label="Open Order Cart">
+          <span>Order Bag</span>
+          <span id="cartCount" class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Freshly Prepared &bull; Fast Dispatch</p>
+        <h1>Rich Nigerian Classics, Served <span>Hot &amp; Bold</span>.</h1>
+        <p class="hero-sub">
+          From smoky ofada with turkey and crisp fried rice to rich afang, egusi, and okoro with your choice of garri, semo, or fufu—order directly from <strong>Nior Kitchen</strong>.
+        </p>
+        <div class="hero-cta">
+          <a href="#menu" class="btn btn-peach">Explore Menu</a>
+          <button type="button" class="btn btn-outline-white" onclick="openContactModal()">Chat or Call 08028477083</button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-badge">Signature Kitchen</div>
+        <img id="heroDishImg" src="fufu and afam_3.jpg" alt="Fufu and Afang Soup at Nior Kitchen" />
+        <div class="hero-card-footer">
+          <div>
+            <h3>Fufu &amp; Afang Soup</h3>
+            <p>Customizable swallow: Garri, Semo, or Fufu</p>
+          </div>
+          <span class="price-tag">&#8358;5,500</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Accepted Confirmation Banner -->
+  <section id="orderAcceptedBanner" class="order-status-banner hidden" aria-live="polite">
+    <div class="container status-inner">
+      <div>
+        <div id="orderAcceptedTitle" class="status-title">Order Successfully Accepted!</div>
+        <div id="orderAcceptedDetails" class="status-detail"></div>
+      </div>
+      <div class="status-actions">
+        <a id="reopenWhatsAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Chat with Nior Kitchen on WhatsApp</a>
+        <button type="button" class="btn btn-outline-white" onclick="hideOrderBanner()">Dismiss</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="menu-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Today's Menu</p>
+          <h2>Order Your Favorite Dish</h2>
+        </div>
+        <div class="filter-tabs" role="tablist">
+          <button class="filter-btn active" data-category="all">All Dishes</button>
+          <button class="filter-btn" data-category="rice">Rice &amp; Pasta</button>
+          <button class="filter-btn" data-category="swallow">Soups &amp; Swallow</button>
+          <button class="filter-btn" data-category="specials">Yam &amp; Classics</button>
+        </div>
+      </div>
+
+      <div id="menuGrid" class="menu-grid"></div>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section id="how-it-works" class="info-strip">
+    <div class="container steps-grid">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <h3>Create Nior Kitchen Account</h3>
+        <p>Sign up with Google, iCloud, Email, or Username &amp; Password before placing your order.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <h3>Pick Meal &amp; Swallow</h3>
+        <p>Choose your rice, pasta, yam, or soup—and pick Garri, Semo, or Fufu for soups.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <h3>Order on WhatsApp &amp; Chat</h3>
+        <p>Send your order to WhatsApp on 08028477083, get instant confirmation, or tap <button type="button" class="inline-care-link" onclick="openContactModal()">08028477083</button> to chat or call.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand footer-brand">
+          <span class="brand-name">NIOR KITCHEN</span>
+        </div>
+        <p class="footer-desc">
+          Rich Nigerian meals, generous portions, and reliable customer care—fresh from our kitchen to your table.
+        </p>
+      </div>
+
+      <div class="care-box">
+        <p class="eyebrow">24/7 Customer Care Line</p>
+        <button type="button" class="care-number-btn" onclick="openContactModal()">08028477083</button>
+        <p class="care-note">Tap the number above to choose <strong>WhatsApp</strong> or <strong>Phone Call</strong>.</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> Nior Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div id="cartBackdrop" class="cart-backdrop hidden"></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Your Order Bag">
+    <div class="cart-header">
+      <h3>Your Order Bag</h3>
+      <button id="closeCartBtn" class="icon-btn" aria-label="Close Cart">&times;</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <strong id="cartTotal">&#8358;0</strong>
+      </div>
+
+      <form id="checkoutForm" class="checkout-form">
+        <input type="text" id="customerName" placeholder="Your Full Name" required />
+        <input type="tel" id="customerPhone" placeholder="Your Phone Number" required />
+        <input type="text" id="customerAddress" placeholder="Delivery Address / Landmark" required />
+        <button type="submit" class="btn btn-peach full-width">Place Order on WhatsApp</button>
+      </form>
+      <p class="care-reminder">Want to chat directly? Tap <button type="button" class="inline-care-link" onclick="openContactModal()">08028477083</button></p>
+    </div>
+  </aside>
+
+  <!-- Nior Kitchen Account Modal (Google, iCloud, Email, Username & Password) -->
+  <div id="accountModalBackdrop" class="modal-backdrop hidden">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+      <p class="eyebrow">Nior Kitchen Member Access</p>
+      <h3 id="accountModalTitle">Create Your Account</h3>
+      <p class="modal-sub">Create a Nior Kitchen account before adding or ordering food.</p>
+
+      <div class="provider-grid">
+        <button type="button" class="provider-btn" onclick="quickProviderAuth('Google')">Continue with Google</button>
+        <button type="button" class="provider-btn" onclick="quickProviderAuth('iCloud')">Continue with iCloud</button>
+      </div>
+
+      <div class="divider-label">Or register with Email / Username &amp; Password</div>
+
+      <form id="accountForm" class="auth-form">
+        <input type="text" id="regUsername" placeholder="Username (e.g. nior_foodie)" required />
+        <input type="email" id="regEmail" placeholder="Email Address (e.g. name@email.com)" required />
+        <input type="password" id="regPassword" placeholder="Create Password (min. 6 characters)" minlength="6" required />
+        <button type="submit" class="btn btn-peach full-width">Create Nior Kitchen Account</button>
+      </form>
+
+      <button type="button" class="btn btn-cancel full-width" onclick="closeAccountModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- WhatsApp or Call Choice Modal -->
+  <div id="contactModalBackdrop" class="modal-backdrop hidden" onclick="closeContactModalOnBackdrop(event)">
+    <div class="modal-card center" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <p class="eyebrow">Nior Kitchen Customer Care</p>
+      <h3 id="contactModalTitle">08028477083</h3>
+      <p class="modal-sub">How would you like to chat or call Nior Kitchen right now?</p>
+      <div class="contact-options">
+        <a
+          href="https://wa.me/2348028477083?text=Hello%20Nior%20Kitchen!%20I%20would%20like%20to%20chat%20about%20an%20order."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-whatsapp full-width"
+        >
+          Chat on WhatsApp
+        </a>
+        <a href="tel:+2348028477083" class="btn btn-peach full-width">
+          Call Phone App
+        </a>
+        <button type="button" class="btn btn-cancel full-width" onclick="closeContactModal()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <script>
+    function createDishFallback(title) {
+      const safeTitle = String(title).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420" viewBox="0 0 600 420"><rect width="600" height="420" fill="#141417"/><circle cx="300" cy="175" r="98" fill="#1F1F24" stroke="#FFB59A" stroke-width="3"/><circle cx="300" cy="175" r="70" fill="#FFFFFF"/><ellipse cx="284" cy="170" rx="30" ry="20" fill="#FFB59A"/><ellipse cx="320" cy="182" rx="26" ry="18" fill="#0B0B0C"/><text x="300" y="325" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="22" font-weight="700">${safeTitle}</text><text x="300" y="355" text-anchor="middle" fill="#FFB59A" font-family="sans-serif" font-size="13" letter-spacing="2">NIOR KITCHEN</text></svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    const MENU_ITEMS = [
+      {
+        id: "white-rice-stew",
+        name: "White Rice and Stew",
+        category: "rice",
+        price: 3500,
+        photoName: "white rice,plantain and stew.jpg",
+        images: [
+          "white rice,plantain and stew.jpg",
+          "images/white rice,plantain and stew.jpg",
+          createDishFallback("White Rice and Stew")
+        ],
+        description: "Steamed fluffy white rice served with rich, savory peppered tomato stew and fried plantain.",
+        hasSwallow: false
+      },
+      {
+        id: "yam-and-egg-sauce",
+        name: "Yam and Egg Sauce",
+        category: "specials",
+        price: 3800,
+        photoName: "8d8ec80381febb9ae5cabc3ac6762889.jpg",
+        images: [
+          "8d8ec80381febb9ae5cabc3ac6762889.jpg",
+          "images/8d8ec80381febb9ae5cabc3ac6762889.jpg",
+          createDishFallback("Yam and Egg Sauce")
+        ],
+        description: "Tender boiled yam slices paired with rich sautéed tomatoes, onions, and spiced egg sauce.",
+        hasSwallow: false
+      },
+      {
+        id: "afang-soup",
+        name: "Afang Soup",
+        category: "swallow",
+        price: 5500,
+        photoName: "fufu and afam.jpg",
+        images: [
+          "fufu and afam.jpg",
+          "fufu and afam_3.jpg",
+          "images/fufu and afam.jpg",
+          createDishFallback("Afang Soup")
+        ],
+        description: "Authentic, hearty afang soup cooked with palm oil, assorted meat, and rich seasoning.",
+        hasSwallow: true
+      },
+      {
+        id: "egusi-soup",
+        name: "Egusi Soup",
+        category: "swallow",
+        price: 5200,
+        photoName: "71a5cfebe17e280415a68adf07f4daff.jpg",
+        images: [
+          "71a5cfebe17e280415a68adf07f4daff.jpg",
+          "images/71a5cfebe17e280415a68adf07f4daff.jpg",
+          createDishFallback("Egusi Soup")
+        ],
+        description: "Ground melon seed soup simmered with leafy greens, assorted meat, and stockfish.",
+        hasSwallow: true
+      },
+      {
+        id: "okoro-soup",
+        name: "Okoro Soup",
+        category: "swallow",
+        price: 5000,
+        photoName: "semovita and okoro.jpg",
+        images: [
+          "semovita and okoro.jpg",
+          "images/semovita and okoro.jpg",
+          createDishFallback("Okoro Soup")
+        ],
+        description: "Freshly chopped okoro soup packed with savory spices, fish, and rich broth.",
+        hasSwallow: true
+      },
+      {
+        id: "amala-ewedu-stew",
+        name: "Amala and Ewedu with Stew",
+        category: "swallow",
+        price: 5300,
+        photoName: "amala and ewedu .jpeg",
+        images: [
+          "amala and ewedu .jpeg",
+          "images/amala and ewedu .jpeg",
+          createDishFallback("Amala and Ewedu with Stew")
+        ],
+        description: "Smooth dark amala served with silky ewedu and flavorful assorted meat stew.",
+        hasSwallow: true,
+        swallowOptions: ["Amala + Ewedu & Stew"]
+      },
+      {
+        id: "fried-rice-chicken",
+        name: "Fried Rice and Chicken",
+        category: "rice",
+        price: 4800,
+        photoName: "e150284e709538aa7d222872b95aa25c.jpg",
+        images: [
+          "e150284e709538aa7d222872b95aa25c.jpg",
+          "images/e150284e709538aa7d222872b95aa25c.jpg",
+          createDishFallback("Fried Rice and Chicken")
+        ],
+        description: "Colorful stir-fried rice tossed with veggies and paired with crispy golden chicken.",
+        hasSwallow: false
+      },
+      {
+        id: "ofada-rice-turkey",
+        name: "Ofada Rice with Turkey",
+        category: "rice",
+        price: 6000,
+        photoName: "images.jpeg",
+        images: [
+          "images.jpeg",
+          "images/images.jpeg",
+          createDishFallback("Ofada Rice with Turkey")
+        ],
+        description: "Aromatic local ofada rice served with spicy designer stew and well-seasoned turkey.",
+        hasSwallow: false
+      },
+      {
+        id: "spaghetti-crocker-fish",
+        name: "Spaghetti with Crocker Fish",
+        category: "rice",
+        price: 4600,
+        photoName: "f3f03615db08d1c6f791395550dc7ce3.jpg",
+        images: [
+          "f3f03615db08d1c6f791395550dc7ce3.jpg",
+          "images/f3f03615db08d1c6f791395550dc7ce3.jpg",
+          createDishFallback("Spaghetti with Crocker Fish")
+        ],
+        description: "Flavorful spiced spaghetti topped with well-fried, juicy crocker fish.",
+        hasSwallow: false
+      }
+    ];
+
+    const ACCOUNT_STORAGE_KEY = "nior_kitchen_account";
+    let currentUser = JSON.parse(localStorage.getItem(ACCOUNT_STORAGE_KEY) || "null");
+    let pendingActionAfterAuth = null;
+
+    let cart = [];
+    let activeCategory = "all";
+
+    const menuGrid = document.getElementById("menuGrid");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const cartBackdrop = document.getElementById("cartBackdrop");
+    const cartItemsEl = document.getElementById("cartItems");
+    const cartCountEl = document.getElementById("cartCount");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const toastEl = document.getElementById("toast");
+    const contactModalBackdrop = document.getElementById("contactModalBackdrop");
+    const accountModalBackdrop = document.getElementById("accountModalBackdrop");
+    const accountBtn = document.getElementById("accountBtn");
+
+    function formatNaira(amount) {
+      return "₦" + Number(amount).toLocaleString("en-NG");
+    }
+
+    function syncAccountUI() {
+      if (currentUser) {
+        accountBtn.textContent = `@${currentUser.username}`;
+      } else {
+        accountBtn.textContent = "Create Account";
+      }
+    }
+
+    function openAccountModal(onSuccess = null) {
+      pendingActionAfterAuth = onSuccess;
+      accountModalBackdrop.classList.remove("hidden");
+    }
+
+    function closeAccountModal() {
+      pendingActionAfterAuth = null;
+      accountModalBackdrop.classList.add("hidden");
+    }
+
+    function completeAccountRegistration(userObj) {
+      currentUser = userObj;
+      localStorage.setItem(ACCOUNT_STORAGE_KEY, JSON.stringify(currentUser));
+      syncAccountUI();
+      const cb = pendingActionAfterAuth;
+      closeAccountModal();
+      showToast(`Welcome to Nior Kitchen, ${currentUser.username}!`);
+      if (typeof cb === "function") {
+        cb();
+      }
+    }
+
+    function quickProviderAuth(provider) {
+      const handle = `${provider.toLowerCase()}_guest`;
+      completeAccountRegistration({
+        username: handle,
+        email: `${handle}@niorkitchen.local`,
+        provider
+      });
+    }
+
+    document.getElementById("accountForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("regUsername").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      completeAccountRegistration({
+        username,
+        email,
+        provider: "Email / Password"
+      });
+      e.target.reset();
+    });
+
+    function tryNextImage(imgEl) {
+      const list = JSON.parse(imgEl.dataset.sources || "[]");
+      const idx = Number(imgEl.dataset.index || 0) + 1;
+      if (idx < list.length) {
+        imgEl.dataset.index = idx;
+        imgEl.src = list[idx];
+      }
+    }
+
+    const heroImg = document.getElementById("heroDishImg");
+    heroImg.dataset.sources = JSON.stringify([
+      "fufu and afam_3.jpg",
+      "fufu and afam.jpg",
+      "images/fufu and afam_3.jpg",
+      "images/fufu and afam.jpg",
+      createDishFallback("Fufu & Afang Soup")
+    ]);
+    heroImg.dataset.index = "0";
+    heroImg.onerror = function () { tryNextImage(this); };
+
+    function renderMenu() {
+      const filtered = activeCategory === "all"
+        ? MENU_ITEMS
+        : MENU_ITEMS.filter((item) => item.category === activeCategory);
+
+      menuGrid.innerHTML = filtered.map((item) => {
+        const options = item.swallowOptions || ["Garri", "Semo", "Fufu"];
+        const swallowSelector = item.hasSwallow
+          ? `<div class="swallow-select-wrap">
+              <label for="side-${item.id}">${item.swallowOptions ? "Serving Style" : "Choose Swallow"}</label>
+              <select id="side-${item.id}" class="swallow-select">
+                ${options.map((opt) => `<option value="${opt}">${opt}</option>`).join("")}
+              </select>
+            </div>`
+          : "";
+
+        const encodedSources = JSON.stringify(item.images).replace(/"/g, "&quot;");
+
+        return `<article class="menu-card">
+          <div class="menu-img-wrap">
+            <img
+              src="${item.images[0]}"
+              data-sources="${encodedSources}"
+              data-index="0"
+              alt="${item.name}"
+              onerror="tryNextImage(this)"
+            />
+          </div>
+          <div class="menu-body">
+            <div class="menu-top">
+              <h3 class="menu-title">${item.name}</h3>
+              <span class="menu-price">${formatNaira(item.price)}</span>
+            </div>
+            <p class="menu-desc">${item.description}</p>
+            ${swallowSelector}
+            <button class="add-btn" onclick="addToCart('${item.id}')">Add to Order</button>
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function addToCart(itemId) {
+      if (!currentUser) {
+        openAccountModal(() => addToCart(itemId));
+        return;
+      }
+
+      const dish = MENU_ITEMS.find((m) => m.id === itemId);
+      if (!dish) return;
+      let side = "";
+      if (dish.hasSwallow) {
+        const selectEl = document.getElementById(`side-${dish.id}`);
+        side = selectEl ? selectEl.value : "Garri";
+      }
+      const lineKey = `${dish.id}__${side}`;
+      const existing = cart.find((c) => c.lineKey === lineKey);
+      if (existing) existing.qty += 1;
+      else cart.push({
+        lineKey,
+        id: dish.id,
+        name: dish.name,
+        side,
+        price: dish.price,
+        photoName: dish.photoName,
+        qty: 1
+      });
+      updateCartUI();
+      showToast(`${dish.name}${side ? ` (${side})` : ""} added to order bag`);
+    }
+
+    function changeQty(lineKey, delta) {
+      const item = cart.find((c) => c.lineKey === lineKey);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter((c) => c.lineKey !== lineKey);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      cartCountEl.textContent = totalQty;
+      cartTotalEl.textContent = formatNaira(totalPrice);
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = `<p class="empty-cart">Your order bag is empty. Pick a meal from the menu!</p>`;
+        return;
+      }
+      cartItemsEl.innerHTML = cart.map((item) => `<div class="cart-item"><div><div class="cart-item-title">${item.name}</div>${item.side ? `<div class="cart-item-sub">Side: ${item.side}</div>` : ""}<div class="cart-item-sub">${formatNaira(item.price * item.qty)}</div></div><div class="qty-controls"><button class="qty-btn" onclick="changeQty('${item.lineKey}', -1)">-</button><span>${item.qty}</span><button class="qty-btn" onclick="changeQty('${item.lineKey}', 1)">+</button></div></div>`).join("");
+    }
+
+    function openCart() {
+      if (!currentUser) {
+        openAccountModal(() => openCart());
+        return;
+      }
+      cartDrawer.classList.add("open");
+      cartBackdrop.classList.remove("hidden");
+    }
+
+    function closeCart() {
+      cartDrawer.classList.remove("open");
+      cartBackdrop.classList.add("hidden");
+    }
+
+    function openContactModal() {
+      contactModalBackdrop.classList.remove("hidden");
+    }
+
+    function closeContactModal() {
+      contactModalBackdrop.classList.add("hidden");
+    }
+
+    function closeContactModalOnBackdrop(event) {
+      if (event.target === contactModalBackdrop) {
+        closeContactModal();
+      }
+    }
+
+    function hideOrderBanner() {
+      document.getElementById("orderAcceptedBanner").classList.add("hidden");
+    }
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.remove("hidden");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toastEl.classList.add("hidden"), 2500);
+    }
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.dataset.category;
+        renderMenu();
+      });
+    });
+
+    document.getElementById("openCartBtn").addEventListener("click", openCart);
+    document.getElementById("closeCartBtn").addEventListener("click", closeCart);
+    cartBackdrop.addEventListener("click", closeCart);
+
+    document.getElementById("checkoutForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (!currentUser) {
+        openAccountModal();
+        return;
+      }
+
+      if (cart.length === 0) {
+        showToast("Add at least one meal before placing an order.");
+        return;
+      }
+
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const address = document.getElementById("customerAddress").value.trim();
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const orderRef = "NK-" + Math.floor(100000 + Math.random() * 900000);
+
+      const orderLines = cart
+        .map((item) => {
+          const sideText = item.side ? ` (${item.side})` : "";
+          const lineTotal = formatNaira(item.price * item.qty);
+          return `- ${item.qty}x ${item.name}${sideText} = ${lineTotal} [Food Photo: ${item.photoName}]`;
+        })
+        .join("\n");
+
+      const message = [
+        `Hello Nior Kitchen! New Order (${orderRef}) for 08028477083:`,
+        `Account: @${currentUser.username} (${currentUser.email})`,
+        "",
+        orderLines,
+        "",
+        `Total: ${formatNaira(total)}`,
+        `Customer Name: ${name}`,
+        `Phone: ${phone}`,
+        `Address: ${address}`
+      ].join("\n");
+
+      const waUrl = `https://wa.me/2348028477083?text=${encodeURIComponent(message)}`;
+
+      const banner = document.getElementById("orderAcceptedBanner");
+      document.getElementById("orderAcceptedTitle").textContent = `Order ${orderRef} Successfully Accepted!`;
+      document.getElementById("orderAcceptedDetails").textContent =
+        `Thank you, ${name}. Your order (${formatNaira(total)}) is queued for Nior Kitchen dispatch to ${address}.`;
+      document.getElementById("reopenWhatsAppBtn").href = waUrl;
+      banner.classList.remove("hidden");
+
+      cart = [];
+      updateCartUI();
+      e.target.reset();
+      closeCart();
+
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+      banner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    syncAccountUI();
+    renderMenu();
+    updateCartUI();
+  </script>
+</body>
+</html>
